@@ -1,0 +1,20 @@
+{
+  "name": "skill-mingle",
+  "version": "1.0.0",
+  "description": "Skill assessment platform",
+  "scripts": {
+    "install-backend": "cd backend && npm install",
+    "install-frontend": "cd frontend && npm install",
+    "install-all": "npm run install-backend && npm run install-frontend",
+    "start-backend": "cd backend && npm start",
+    "start-frontend": "cd frontend && npm run dev",
+    "dev": "concurrently \"npm run start-backend\" \"npm run start-frontend\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
+

@@ -1,0 +1,265 @@
+.dashboard {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.dashboard-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+
+.dashboard-content h1 {
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 2rem;
+}
+
+.profile-form {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.form-section {
+  margin-bottom: 30px;
+}
+
+.form-section label {
+  display: block;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.form-section input,
+.form-section textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+  transition: border-color 0.3s;
+}
+
+.form-section input:focus,
+.form-section textarea:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.add-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.3s;
+}
+
+.add-btn:hover {
+  background: #5568d3;
+}
+
+.multi-item {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #e0e0e0;
+}
+
+.multi-item input,
+.multi-item textarea {
+  margin-bottom: 10px;
+}
+
+.multi-item textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.remove-btn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.remove-btn:hover {
+  background: #ee5a5a;
+}
+
+.skill-input-container {
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.skill-input-container input {
+  width: 100%;
+}
+
+.skill-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 2px solid #667eea;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.skill-option {
+  padding: 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.skill-option:hover {
+  background: #f0f0f0;
+}
+
+.selected-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.skill-tag {
+  background: #667eea;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.skill-tag button {
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.skill-tag button:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.assessment-section {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.assessment-section h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.assessment-section p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.skill-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.skill-assessment-btn {
+  background: #51cf66;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.skill-assessment-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(81, 207, 102, 0.4);
+}
+
+.view-profile-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.view-profile-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+}
+
