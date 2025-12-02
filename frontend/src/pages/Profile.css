@@ -52,6 +52,51 @@
   margin-top: 20px;
 }
 
+.skills-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.skill-bar-row {
+  display: grid;
+  grid-template-columns: 1.2fr 4fr 0.6fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.skill-bar-label {
+  font-size: 0.95rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.skill-bar-track {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: #e9ecef;
+  overflow: hidden;
+}
+
+.skill-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 999px;
+  background: #667eea;
+  transition: width 0.4s ease;
+}
+
+.skill-bar-percent {
+  font-size: 0.9rem;
+  color: #555;
+  text-align: right;
+}
+
 .skill-card {
   background: #f8f9ff;
   padding: 20px;

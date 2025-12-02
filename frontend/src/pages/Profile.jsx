@@ -58,6 +58,34 @@ const Profile = () => {
           <p className="contact-info">Contact: {profile.contact || 'Not provided'}</p>
         </div>
 
+        {profile.skills && profile.skills.filter(s => s.score > 0).length > 0 && (
+          <div className="profile-section">
+            <h2>Skill Proficiency Chart</h2>
+            <div className="skills-chart">
+              {profile.skills
+                .filter(s => s.score > 0)
+                .sort((a, b) => b.score - a.score)
+                .map((skill, index) => (
+                  <div key={index} className="skill-bar-row">
+                    <span className="skill-bar-label">{skill.skill}</span>
+                    <div className="skill-bar-track">
+                      <div
+                        className="skill-bar-fill"
+                        style={{
+                          width: `${Math.max(5, Math.min(skill.score, 100))}%`,
+                          backgroundColor: getLevelColor(skill.level)
+                        }}
+                      />
+                    </div>
+                    <span className="skill-bar-percent">
+                      {skill.score.toFixed(1)}%
+                    </span>
+                  </div>
+                ))}
+            </div>
+          </div>
+        )}
+
         <div className="profile-section">
           <h2>Skills Report</h2>
           <div className="skills-grid">
