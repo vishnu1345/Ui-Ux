@@ -1,48 +1,69 @@
 .profile {
   min-height: 100vh;
-  background: #f5f5f5;
+  background: radial-gradient(circle at top left, #eef2ff 0, #f5f5f5 40%, #ffffff 100%);
 }
 
 .profile-content {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
-  padding: 30px 20px;
+  padding: 32px 20px 40px;
 }
 
 .profile-header {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 32px 32px 26px;
+  border-radius: 16px;
+  box-shadow: 0 18px 45px rgba(102, 126, 234, 0.35);
+  margin-bottom: 28px;
   text-align: center;
+  color: white;
 }
 
 .profile-header h1 {
-  color: #333;
-  margin-bottom: 10px;
-  font-size: 2.5rem;
+  color: #ffffff;
+  margin-bottom: 8px;
+  font-size: 2.4rem;
+  letter-spacing: 0.02em;
 }
 
 .contact-info {
-  color: #666;
-  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.02rem;
 }
 
 .profile-section {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
+  background: #ffffff;
+  padding: 26px 26px 24px;
+  border-radius: 14px;
+  box-shadow: 0 14px 35px rgba(15, 23, 42, 0.08);
+  margin-bottom: 26px;
 }
 
 .profile-section h2 {
-  color: #333;
-  margin-bottom: 20px;
-  font-size: 1.8rem;
-  border-bottom: 3px solid #667eea;
-  padding-bottom: 10px;
+  color: #1f2933;
+  margin-bottom: 18px;
+  font-size: 1.65rem;
+  border-bottom: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-section h2::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #667eea;
+}
+
+.profile-section h2::after {
+  content: "";
+  height: 2px;
+  width: 42px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
 }
 
 .skills-grid {
@@ -55,21 +76,24 @@
 .skills-chart {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-top: 10px;
+  gap: 14px;
+  margin-top: 6px;
 }
 
 .skill-bar-row {
   display: grid;
-  grid-template-columns: 1.2fr 4fr 0.6fr;
+  grid-template-columns: minmax(120px, 1.3fr) 4fr minmax(60px, 0.7fr);
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .skill-bar-label {
   font-size: 0.95rem;
-  color: #333;
-  font-weight: 500;
+  color: #1f2933;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .skill-bar-track {
@@ -87,33 +111,36 @@
   top: 0;
   bottom: 0;
   border-radius: 999px;
-  background: #667eea;
-  transition: width 0.4s ease;
+  background: linear-gradient(90deg, #667eea, #22c55e);
+  box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.1);
+  transition: width 0.4s ease, transform 0.3s ease;
 }
 
 .skill-bar-percent {
   font-size: 0.9rem;
-  color: #555;
+  color: #4b5563;
   text-align: right;
+  font-weight: 500;
 }
 
 .skill-card {
-  background: #f8f9ff;
-  padding: 20px;
-  border-radius: 8px;
-  border: 2px solid #e0e0e0;
-  transition: transform 0.2s, box-shadow 0.2s;
+  background: radial-gradient(circle at top left, #f5f7ff 0, #ffffff 55%, #fdf2ff 100%);
+  padding: 20px 18px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.2s ease;
 }
 
 .skill-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+  border-color: rgba(129, 140, 248, 0.9);
 }
 
 .skill-card h3 {
-  color: #333;
-  margin-bottom: 15px;
-  font-size: 1.3rem;
+  color: #111827;
+  margin-bottom: 10px;
+  font-size: 1.15rem;
 }
 
 .skill-level {
@@ -124,12 +151,13 @@
 }
 
 .level-badge {
-  padding: 6px 16px;
-  border-radius: 20px;
+  padding: 5px 14px;
+  border-radius: 999px;
   color: white;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.78rem;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .level-badge-small {
