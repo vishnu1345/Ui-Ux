@@ -3,103 +3,190 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 20px;
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  overflow: hidden;
+}
+
+
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
 .auth-card {
-  background: white;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  padding: 48px 40px;
+  border-radius: 20px;
   width: 100%;
   max-width: 450px;
+  position: relative;
+  z-index: 1;
 }
 
-.auth-card h1 {
-  color: #667eea;
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 2.5rem;
+.auth-header {
+  margin-bottom: 32px;
+}
+
+.logo-text {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  text-align: left;
 }
 
 .auth-card h2 {
-  color: #333;
-  text-align: center;
-  margin-bottom: 30px;
-  font-size: 1.8rem;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: left;
+  margin: 0;
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 .form-group label {
   display: block;
   margin-bottom: 8px;
-  color: #333;
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
+  font-size: 14px;
 }
 
 .form-group input {
   width: 100%;
-  padding: 12px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 0.3s;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  font-size: 15px;
+  color: #333;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-group input::placeholder {
+  color: #999;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
 }
 
-.auth-card button {
+.password-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input-wrapper input {
+  padding-right: 48px;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  transition: color 0.2s;
+}
+
+.password-toggle:hover {
+  color: #333;
+}
+
+.forgot-password {
+  text-align: left;
+  margin-bottom: 24px;
+  margin-top: -8px;
+}
+
+.forgot-password a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.forgot-password a:hover {
+  color: rgba(255, 255, 255, 1);
+  text-decoration: underline;
+}
+
+.auth-submit-btn {
   width: 100%;
-  padding: 12px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 14px;
+  background: #4B3DBF;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  /* transition: all 0.3s ease; */
+  margin-top: 8px;
 }
 
-.auth-card button:hover:not(:disabled) {
+.auth-submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #5A4FF5, #4132A7);
+  /* transition: all 0.3s ease-in-out; */
 }
 
-.auth-card button:disabled {
+.auth-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.auth-submit-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
 }
 
 .error-message {
-  background: #fee;
-  color: #c33;
-  padding: 12px;
-  border-radius: 8px;
-  margin-bottom: 20px;
+  background: rgba(102, 126, 234, 0.2);
+  backdrop-filter: blur(10px);
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 24px;
   text-align: center;
+  font-size: 14px;
+  border: 1px solid rgba(102, 126, 234, 0.4);
 }
 
 .auth-link {
   text-align: center;
-  margin-top: 20px;
-  color: #666;
+  margin-top: 24px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 14px;
 }
 
 .auth-link a {
-  color: #667eea;
+  color: rgba(255, 255, 255, 0.95);
   text-decoration: none;
   font-weight: 600;
+  transition: color 0.2s;
 }
 
 .auth-link a:hover {
+  color: rgba(255, 255, 255, 1);
   text-decoration: underline;
 }
 
