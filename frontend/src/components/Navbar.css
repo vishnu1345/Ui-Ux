@@ -38,11 +38,23 @@
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .nav-link:hover {
   background: rgba(255, 255, 255, 0.3);
+}
+
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.9);
+  color: #667eea;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav-link.active:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-1px);
 }
 
 .logout-btn {
