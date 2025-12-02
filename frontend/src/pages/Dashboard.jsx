@@ -1,28 +1,33 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import { profileAPI, skillsAPI } from '../services/api';
-import Navbar from '../components/Navbar';
-import './Dashboard.css';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+import { profileAPI, skillsAPI } from "../services/api";
+import Navbar from "../components/Navbar";
+import "./Dashboard.css";
 
 const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: '',
-    contact: '',
+    name: "",
+    contact: "",
     experiences: [],
     projects: [],
     skills: [],
     achievements: [],
-    certifications: []
+    certifications: [],
   });
   const [availableSkills, setAvailableSkills] = useState([]);
-  const [skillSearch, setSkillSearch] = useState('');
+  const [skillSearch, setSkillSearch] = useState("");
   const [showSkillDropdown, setShowSkillDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
   const [profileSubmitted, setProfileSubmitted] = useState(false);
   const [userProfile, setUserProfile] = useState(null);
+  const [errors, setErrors] = useState({
+    name: "",
+    contact: "",
+    skills: "",
+  });
 
   useEffect(() => {
     loadProfile();
@@ -32,19 +37,22 @@ const Dashboard = () => {
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (showSkillDropdown && !event.target.closest('.skill-input-container')) {
+      if (
+        showSkillDropdown &&
+        !event.target.closest(".skill-input-container")
+      ) {
         setShowSkillDropdown(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [showSkillDropdown]);
 
   const seedSkillsIfNeeded = async () => {
     try {
       await skillsAPI.seedSkills();
     } catch (error) {
-      console.log('Skills already seeded or error:', error);
+      console.log("Skills already seeded or error:", error);
     }
   };
 
@@ -54,26 +62,26 @@ const Dashboard = () => {
       const profile = response.data;
       setUserProfile(profile);
       setFormData({
-        name: profile.name || '',
-        contact: profile.contact || '',
+        name: profile.name || "",
+        contact: profile.contact || "",
         experiences: profile.experiences || [],
         projects: profile.projects || [],
-        skills: profile.skills?.map(s => s.skill) || [],
+        skills: profile.skills?.map((s) => s.skill) || [],
         achievements: profile.achievements || [],
-        certifications: profile.certifications || []
+        certifications: profile.certifications || [],
       });
       setProfileSubmitted(profile.skills && profile.skills.length > 0);
     } catch (error) {
-      console.error('Error loading profile:', error);
+      console.error("Error loading profile:", error);
     }
   };
 
-  const loadSkills = async (search = '') => {
+  const loadSkills = async (search = "") => {
     try {
       const response = await skillsAPI.getSkills(search);
       setAvailableSkills(response.data);
     } catch (error) {
-      console.error('Error loading skills:', error);
+      console.error("Error loading skills:", error);
     }
   };
 
@@ -88,24 +96,31 @@ const Dashboard = () => {
     if (!formData.skills.includes(skill)) {
       setFormData({
         ...formData,
-        skills: [...formData.skills, skill]
+        skills: [...formData.skills, skill],
       });
+      // clear skills error once at least one skill is selected
+      if (errors.skills) {
+        setErrors({ ...errors, skills: "" });
+      }
     }
-    setSkillSearch('');
+    setSkillSearch("");
     setShowSkillDropdown(false);
   };
 
   const removeSkill = (skill) => {
     setFormData({
       ...formData,
-      skills: formData.skills.filter(s => s !== skill)
+      skills: formData.skills.filter((s) => s !== skill),
     });
   };
 
   const addExperience = () => {
     setFormData({
       ...formData,
-      experiences: [...formData.experiences, { company: '', position: '', duration: '', description: '' }]
+      experiences: [
+        ...formData.experiences,
+        { company: "", position: "", duration: "", description: "" },
+      ],
     });
   };
 
@@ -118,14 +133,17 @@ const Dashboard = () => {
   const removeExperience = (index) => {
     setFormData({
       ...formData,
-      experiences: formData.experiences.filter((_, i) => i !== index)
+      experiences: formData.experiences.filter((_, i) => i !== index),
     });
   };
 
   const addProject = () => {
     setFormData({
       ...formData,
-      projects: [...formData.projects, { name: '', description: '', technologies: '', link: '' }]
+      projects: [
+        ...formData.projects,
+        { name: "", description: "", technologies: "", link: "" },
+      ],
     });
   };
 
@@ -138,36 +156,61 @@ const Dashboard = () => {
   const removeProject = (index) => {
     setFormData({
       ...formData,
-      projects: formData.projects.filter((_, i) => i !== index)
+      projects: formData.projects.filter((_, i) => i !== index),
     });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // client-side validation for required fields
+    const newErrors = {
+      name: "",
+      contact: "",
+      skills: "",
+    };
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Name is required";
+    }
+    if (!formData.contact.trim()) {
+      newErrors.contact = "Contact is required";
+    }
+    if (formData.skills.length === 0) {
+      newErrors.skills = "Please add at least one skill";
+    }
+
+    if (newErrors.name || newErrors.contact || newErrors.skills) {
+      setErrors(newErrors);
+      // don't submit if validation fails
+      return;
+    }
+
     setLoading(true);
     try {
       await profileAPI.updateProfile(formData);
       setProfileSubmitted(true);
       await loadProfile();
+      alert("Profile submitted successfully");
     } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('Error updating profile');
+      console.error("Error updating profile:", error);
+      alert("Error updating profile");
     }
     setLoading(false);
   };
 
   const handleTakeAssessment = () => {
     if (formData.skills.length === 0) {
-      alert('Please add at least one skill to take assessment');
+      alert("Please add at least one skill to take assessment");
       return;
     }
     // Navigate to assessment selection or first skill
     navigate(`/assessment/${formData.skills[0]}`);
   };
 
-  const filteredSkills = availableSkills.filter(skill =>
-    skill.name.toLowerCase().includes(skillSearch.toLowerCase()) &&
-    !formData.skills.includes(skill.name)
+  const filteredSkills = availableSkills.filter(
+    (skill) =>
+      skill.name.toLowerCase().includes(skillSearch.toLowerCase()) &&
+      !formData.skills.includes(skill.name)
   );
 
   return (
@@ -181,9 +224,16 @@ const Dashboard = () => {
             <input
               type="text"
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              onChange={(e) => {
+                setFormData({ ...formData, name: e.target.value });
+                if (errors.name) {
+                  setErrors({ ...errors, name: "" });
+                }
+              }}
               required
+              className={errors.name ? "input-error" : ""}
             />
+            {errors.name && <p className="error-text">{errors.name}</p>}
           </div>
 
           <div className="form-section">
@@ -191,8 +241,16 @@ const Dashboard = () => {
             <input
               type="text"
               value={formData.contact}
-              onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+              onChange={(e) => {
+                setFormData({ ...formData, contact: e.target.value });
+                if (errors.contact) {
+                  setErrors({ ...errors, contact: "" });
+                }
+              }}
+              required
+              className={errors.contact ? "input-error" : ""}
             />
+            {errors.contact && <p className="error-text">{errors.contact}</p>}
           </div>
 
           <div className="form-section">
@@ -208,26 +266,38 @@ const Dashboard = () => {
                   type="text"
                   placeholder="Company"
                   value={exp.company}
-                  onChange={(e) => updateExperience(index, 'company', e.target.value)}
+                  onChange={(e) =>
+                    updateExperience(index, "company", e.target.value)
+                  }
                 />
                 <input
                   type="text"
                   placeholder="Position"
                   value={exp.position}
-                  onChange={(e) => updateExperience(index, 'position', e.target.value)}
+                  onChange={(e) =>
+                    updateExperience(index, "position", e.target.value)
+                  }
                 />
                 <input
                   type="text"
                   placeholder="Duration"
                   value={exp.duration}
-                  onChange={(e) => updateExperience(index, 'duration', e.target.value)}
+                  onChange={(e) =>
+                    updateExperience(index, "duration", e.target.value)
+                  }
                 />
                 <textarea
                   placeholder="Description"
                   value={exp.description}
-                  onChange={(e) => updateExperience(index, 'description', e.target.value)}
+                  onChange={(e) =>
+                    updateExperience(index, "description", e.target.value)
+                  }
                 />
-                <button type="button" onClick={() => removeExperience(index)} className="remove-btn">
+                <button
+                  type="button"
+                  onClick={() => removeExperience(index)}
+                  className="remove-btn"
+                >
                   Remove
                 </button>
               </div>
@@ -247,26 +317,34 @@ const Dashboard = () => {
                   type="text"
                   placeholder="Project Name"
                   value={project.name}
-                  onChange={(e) => updateProject(index, 'name', e.target.value)}
+                  onChange={(e) => updateProject(index, "name", e.target.value)}
                 />
                 <textarea
                   placeholder="Description"
                   value={project.description}
-                  onChange={(e) => updateProject(index, 'description', e.target.value)}
+                  onChange={(e) =>
+                    updateProject(index, "description", e.target.value)
+                  }
                 />
                 <input
                   type="text"
                   placeholder="Technologies (comma separated)"
                   value={project.technologies}
-                  onChange={(e) => updateProject(index, 'technologies', e.target.value)}
+                  onChange={(e) =>
+                    updateProject(index, "technologies", e.target.value)
+                  }
                 />
                 <input
                   type="text"
                   placeholder="Link (optional)"
                   value={project.link}
-                  onChange={(e) => updateProject(index, 'link', e.target.value)}
+                  onChange={(e) => updateProject(index, "link", e.target.value)}
                 />
-                <button type="button" onClick={() => removeProject(index)} className="remove-btn">
+                <button
+                  type="button"
+                  onClick={() => removeProject(index)}
+                  className="remove-btn"
+                >
                   Remove
                 </button>
               </div>
@@ -301,20 +379,27 @@ const Dashboard = () => {
               {formData.skills.map((skill) => (
                 <span key={skill} className="skill-tag">
                   {skill}
-                  <button type="button" onClick={() => removeSkill(skill)}>×</button>
+                  <button type="button" onClick={() => removeSkill(skill)}>
+                    ×
+                  </button>
                 </span>
               ))}
             </div>
+            {errors.skills && <p className="error-text">{errors.skills}</p>}
           </div>
 
           <div className="form-section">
             <label>Achievements</label>
             <textarea
-              value={formData.achievements.join('\n')}
-              onChange={(e) => setFormData({
-                ...formData,
-                achievements: e.target.value.split('\n').filter(a => a.trim())
-              })}
+              value={formData.achievements.join("\n")}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  achievements: e.target.value
+                    .split("\n")
+                    .filter((a) => a.trim()),
+                })
+              }
               placeholder="Enter achievements (one per line)"
               rows="4"
             />
@@ -323,18 +408,22 @@ const Dashboard = () => {
           <div className="form-section">
             <label>Certifications</label>
             <textarea
-              value={formData.certifications.join('\n')}
-              onChange={(e) => setFormData({
-                ...formData,
-                certifications: e.target.value.split('\n').filter(c => c.trim())
-              })}
+              value={formData.certifications.join("\n")}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  certifications: e.target.value
+                    .split("\n")
+                    .filter((c) => c.trim()),
+                })
+              }
               placeholder="Enter certifications (one per line)"
               rows="4"
             />
           </div>
 
           <button type="submit" disabled={loading} className="submit-btn">
-            {loading ? 'Saving...' : 'Submit Profile'}
+            {loading ? "Saving..." : "Submit Profile"}
           </button>
         </form>
 
@@ -353,7 +442,10 @@ const Dashboard = () => {
                 </button>
               ))}
             </div>
-            <button onClick={() => navigate('/profile')} className="view-profile-btn">
+            <button
+              onClick={() => navigate("/profile")}
+              className="view-profile-btn"
+            >
               View Profile
             </button>
           </div>
@@ -364,4 +456,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
