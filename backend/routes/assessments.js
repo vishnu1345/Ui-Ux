@@ -34,7 +34,7 @@ router.post('/submit', auth, async (req, res) => {
     const percentage = (score / questions.length) * 100;
     let level = 'beginner';
     if (percentage >= 80) level = 'expert';
-    else if (percentage >= 50) level = 'intermediate';
+    else if (percentage >= 60) level = 'intermediate';
     
     // Save assessment result
     user.assessments.push({
